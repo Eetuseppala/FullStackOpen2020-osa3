@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
   },
   "repository": {
@@ -15,5 +17,12 @@
   "bugs": {
     "url": "https://github.com/Eetuseppala/FullStackOpen2020-osa3/issues"
   },
-  "homepage": "https://github.com/Eetuseppala/FullStackOpen2020-osa3#readme"
+  "homepage": "https://github.com/Eetuseppala/FullStackOpen2020-osa3#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
 }
