@@ -11,6 +11,7 @@ morgan.token('object', function(req, res) {
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :object')) 
 app.use(express.json()) 
 app.use(cors())
+app.use(express.static('build'))
 
 app.get('/', (req, res) => {
     res.send('<h1>Sellanen sivu!</h1>')
