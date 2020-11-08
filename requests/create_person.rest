@@ -1,4 +1,4 @@
-POST http://localhost:3001/api/persons
+POST https://ejs-fullstackopen2020-part3.herokuapp.com/api/persons
 Content-Type: application/json
 
 {

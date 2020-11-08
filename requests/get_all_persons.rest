@@ -1,1 +1,1 @@
-GET http://localhost:3001/api/persons/
+GET https://ejs-fullstackopen2020-part3.herokuapp.com/api/persons
