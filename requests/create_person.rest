@@ -2,6 +2,6 @@ POST https://ejs-fullstackopen2020-part3.herokuapp.com/api/persons
 Content-Type: application/json
 
 {
-    "name": "Testi Äijä",
-    "number": "380942304872" 
+    "name": "Uusi Testi",
+    "number": "3834245555552" 
 }

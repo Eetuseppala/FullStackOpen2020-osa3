@@ -1,6 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const Person = require('./models/person')
+const { response } = require('express')
 
 const app = express()
 
@@ -18,18 +21,20 @@ app.get('/', (req, res) => {
   })
   
 app.get('/api/persons', (req, res) => {
-  res.json(persons)
+  Person.find({}).then(people => {
+    res.json(people)
+  })
 })
 
 app.get('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const person = persons.find(person => person.id === id)
-  response.json(person)
+  Person.findById(request.params.id).then(person => {
+    response.json(person)
+  })
 })
 
 app.get('/info', (req, res) => {
   res.send(
-  `<p>Phone book has info on ${persons.length} people. </p> <p>${new Date()}</p>`
+  `<p>Phone book has info on ${Person.length} people. </p> <p>${new Date()}</p>`
   )
 })
 
@@ -56,14 +61,15 @@ app.post('/api/persons', (request, response) => {
       })
   }
   
-  const person = {
+  const person = new Person({
       name: body.name,
       number: body.number,
       id: generateId()
-  }
+  })
 
-  persons = persons.concat(person)
-  return response.status(201).end()
+  person.save().then(savedPerson => {
+    response.json(savedPerson)
+  })
 })
 
 const generateId = () => {
