@@ -18,7 +18,7 @@ app.use(express.static('build'))
 
 app.get('/', (req, res) => {
     res.send('<h1>Sellanen sivu!</h1>')
-  })
+})
   
 app.get('/api/persons', (req, res) => {
   Person.find({}).then(people => {
@@ -27,22 +27,29 @@ app.get('/api/persons', (req, res) => {
 })
 
 app.get('/api/persons/:id', (request, response) => {
-  Person.findById(request.params.id).then(person => {
-    response.json(person)
-  })
+  Person.findById(request.params.id)
+    .then(person => {
+      if(person) {
+        response.json(person)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => next(error))
 })
 
 app.get('/info', (req, res) => {
   res.send(
-  `<p>Phone book has info on ${Person.length} people. </p> <p>${new Date()}</p>`
+  `<p>Phone book has info on ${persons.length} people. </p> <p>${new Date()}</p>`
   )
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  persons = persons.filter(person => person.id !== id)
-
-  response.status(204).end()
+  Person.findByIdAndRemove(request.params.id)
+  .then(result => {
+    response.status(204).end()
+  })
+  .catch(error => next(error))
 })
 
 app.post('/api/persons', (request, response) => {
@@ -72,13 +79,24 @@ app.post('/api/persons', (request, response) => {
   })
 })
 
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+
+  next(error)
+}
+
+app.use(errorHandler) 
+
 const generateId = () => {
   const maxId = persons.length > 0
     ? Math.max(...persons.map(n => n.id))
     : 0
   return maxId + 1
-}
-  
+} 
 
 let persons = [
     {
