@@ -1,7 +1,7 @@
-POST https://ejs-fullstackopen2020-part3.herokuapp.com/api/persons
+POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "Uusi Testi",
-    "number": "3834245555552" 
+    "name": "ää",
+    "number": "3" 
 }
