@@ -5,6 +5,7 @@ if (process.argv.length<3) {
   process.exit(1)
 }
 
+// eslint-disable-next-line no-undef
 const password = process.argv[2]
 
 const url =
@@ -20,22 +21,23 @@ const personSchema = new mongoose.Schema({
 const Person = mongoose.model('Person', personSchema)
 
 if(!process.argv[3] || !process.argv[4]) {
-    Person.find({}).then(result => {
-        console.log('Phone book:')
-        result.forEach(person => {
-          console.log(person.name +" "+ person.number)
-        })
-        mongoose.connection.close()
+  Person.find({}).then(result => {
+    console.log('Phone book:')
+    result.forEach(person => {
+      console.log(person.name +' '+ person.number)
     })
+    mongoose.connection.close()
+  })
 }
 else {
-    const person = new Person({
-        name: process.argv[3],
-        number: process.argv[4]
-    })
+  const person = new Person({
+    // eslint-disable-next-line no-undef
+    name: process.argv[3],
+    number: process.argv[4]
+  })
 
-    person.save().then(response => {
-        console.log(`Added ${person.name}, number: ${person.number}, to phone book`)
-        mongoose.connection.close()
-    })
+  person.save().then(() => {
+    console.log(`Added ${person.name}, number: ${person.number}, to phone book`)
+    mongoose.connection.close()
+  })
 }
